@@ -1,0 +1,32 @@
+:root {
+  /* paper */
+  --paper:        #F2EDE3;  /* page background */
+  --paper-deep:   #E6DFD1;  /* cards, panels */
+  --paper-edge:   #D4CBB8;  /* hairlines, borders */
+
+  /* ink */
+  --ink:          #1A1814;  /* primary text */
+  --ink-soft:     #5C564C;  /* secondary text (≈6:1 on --paper) */
+
+  /* one accent, used sparingly */
+  --accent:       #C8321A;  /* signal red — links, highlights, the "thread" */
+
+  /* type */
+  --font-display: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:    "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* scale (fluid) */
+  --t-giant: clamp(4.5rem, 16vw, 15rem);  /* hero name */
+  --t-h1:    clamp(2.75rem, 7vw, 6rem);   /* chapter titles */
+  --t-h2:    clamp(1.75rem, 3.5vw, 2.75rem);
+  --t-body:  clamp(1rem, 1.1vw, 1.125rem);
+  --t-small: 0.8125rem;
+
+  /* space */
+  --gutter: clamp(16px, 4vw, 64px);
+  --section-gap: clamp(120px, 18vh, 240px);
+
+  /* derived */
+  --thread: 2px;
+  --nav-h: 56px;
+}
