@@ -8,9 +8,17 @@ export function Experiments() {
         <h2 className="h1" id="exp-t">
           {experiments.title}
         </h2>
-        <p className="experiments__sub">{experiments.subline}</p>
+        <div className="experiments__side">
+          <p className="experiments__sub">{experiments.subline}</p>
+          <button type="button" className="button label" data-tidy hidden>
+            {experiments.tidy}
+          </button>
+        </div>
       </div>
-      {/* Static, tidy grid. Step 3 turns this into the draggable pile. */}
+      <p className="sr-only" id="pile-help">
+        {experiments.keyboardHelp}
+      </p>
+      {/* Static, tidy grid without JS; lib/drag.ts turns it into the draggable pile. */}
       <ul className="pile">
         {experiments.items.map((e) => (
           <li key={e.title} className="note">
@@ -27,6 +35,12 @@ export function Experiments() {
           </li>
         ))}
       </ul>
+      <dialog className="note-dialog" aria-labelledby="note-dialog-t">
+        <div className="note-dialog__body" />
+        <form method="dialog">
+          <button className="button label">{experiments.close}</button>
+        </form>
+      </dialog>
     </section>
   );
 }

@@ -111,7 +111,7 @@ a:hover { color: var(--accent); }
   padding-top: calc(var(--nav-h) + clamp(24px, 6vh, 72px));
   padding-bottom: 32px;
   grid-template-rows: 1fr auto;
-  overflow: hidden; /* the name is allowed to bleed off the edge */
+  overflow-x: clip; /* the name may bleed off the edge; y stays open so it can fly to the nav */
 }
 .hero__name {
   grid-column: 1 / -1;
@@ -125,7 +125,7 @@ a:hover { color: var(--accent); }
 }
 .hero__first, .hero__last { display: block; }
 .hero__last { padding-left: calc(100% / 12 * 3); } /* set against the grid */
-.hero__last .thread-mark { padding-bottom: 0.04em; background-size: 100% max(var(--thread), 0.03em); }
+.hero__last .thread-mark { padding-bottom: 0.04em; }
 
 .hero__foot { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: end; row-gap: 16px; }
 .hero__line {
@@ -224,7 +224,8 @@ a:hover { color: var(--accent); }
 /* ---------- experiments ---------- */
 .experiments__head { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: end; margin-bottom: 48px; }
 .experiments__head .h1 { grid-column: 1 / -1; font-size: clamp(3rem, 12.5vw, 13rem); letter-spacing: -0.05em; margin-left: -0.05em; }
-.experiments__sub { grid-column: 8 / -1; color: var(--ink-soft); max-width: 32ch; margin-top: 20px; }
+.experiments__side { grid-column: 8 / -1; margin-top: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.experiments__sub { color: var(--ink-soft); max-width: 32ch; }
 .pile {
   grid-column: 1 / -1;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 24px;
@@ -281,7 +282,7 @@ a:hover { color: var(--accent); }
   .chapter__cols .stack { margin-top: 24px; }
   .chapter__cols .chapter__link { margin-top: 24px; }
   .chapter--bleed .chapter__head, .chapter--bleed .oneliner, .chapter--bleed .chapter__cols { margin-left: calc((100% + 24px) / 8 * 2); }
-    .experiments__sub { grid-column: 1 / -1; }
+    .experiments__side { grid-column: 1 / -1; }
   .now__label { grid-column: 1 / -1; padding: 0 0 16px; }
   .now__body { grid-column: 1 / -1; }
   .contact__email, .contact__links { grid-column: 1 / -1; }
@@ -305,6 +306,41 @@ a:hover { color: var(--accent); }
   .pile { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 16px; }
   .note { flex: 0 0 78%; scroll-snap-align: start; }
 }
+
+/* ---------- enhanced (JS) states ---------- */
+main { position: relative; }
+main > section { position: relative; z-index: 1; }
+.visual { position: relative; z-index: 1; }
+.thread { position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none; }
+.thread path { fill: none; stroke: var(--accent); stroke-width: var(--thread); }
+.has-thread .thread-mark { background: none; } /* the SVG thread draws these underlines now */
+.motion .hero__name { will-change: transform; }
+
+.button {
+  font: inherit; font-size: var(--t-small); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink); background: var(--paper); border: 1px solid var(--ink);
+  padding: 8px 14px; cursor: pointer;
+}
+.button:hover { background: var(--ink); color: var(--paper); }
+
+.pile--live { display: block; position: relative; height: clamp(600px, 52vw, 720px); }
+.pile--live .note {
+  position: absolute; top: 0; left: 0; width: min(290px, 40%); min-height: 0;
+  cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+}
+.pile--live .note:focus-visible { outline-offset: 4px; }
+.note.is-dragging, .tag.is-dragging { cursor: grabbing; }
+.tag.is-draggable { position: relative; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+
+.note-dialog {
+  margin: auto; width: min(520px, calc(100vw - 32px));
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--ink); padding: 28px;
+}
+.note-dialog::backdrop { background: rgb(26 24 20 / 0.45); }
+.note-dialog__body { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+.note-dialog .note__title { font-size: var(--t-h2); }
+.note-dialog .note__text { font-size: var(--t-body); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

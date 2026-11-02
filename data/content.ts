@@ -147,6 +147,9 @@ export const experiments = {
   title: "Experiments",
   subline: "Hackathons, prototypes and things I built to find out. Drag them around.",
   tidy: "tidy up",
+  // interface text (not in CONTENT.md): keyboard help for screen readers, dialog close
+  keyboardHelp: "Arrow keys move this note. Enter opens it.",
+  close: "Close",
   items: [
     {
       title: "Amazon ML Challenge 2026",

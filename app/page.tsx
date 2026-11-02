@@ -5,6 +5,7 @@ import { Work } from "@/components/Work";
 import { Experiments } from "@/components/Experiments";
 import { Now } from "@/components/Now";
 import { Contact } from "@/components/Contact";
+import { Motion } from "@/components/Motion";
 
 export default function Page() {
   return (
@@ -21,6 +22,7 @@ export default function Page() {
         <Now />
         <Contact />
       </main>
+      <Motion />
     </>
   );
 }
