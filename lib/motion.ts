@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { initPile, initTags } from "./drag";
 import { initThread } from "./thread";
+import { initDiagrams } from "./diagrams";
 
 /**
  * All scroll-driven motion. Everything here is enhancement: the page is
@@ -103,6 +104,9 @@ export function initMotion(): () => void {
           scrollTrigger: { trigger: f.parentElement, start: "top bottom", end: "bottom top", scrub: true },
         });
       });
+
+      /* 4b. Diagrams standing in for project GIFs play with the scroll */
+      initDiagrams();
 
       /* 5. Experiments pile + draggable tags (the pile is a scroll row on phones) */
       const offPile = wide ? initPile() : () => {};

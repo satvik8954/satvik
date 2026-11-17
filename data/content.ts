@@ -7,7 +7,9 @@ export type Link = { label: string; href: string };
 /** A project visual: a placeholder until real media exists, or a simple typographic diagram. */
 export type Visual =
   | { kind: "placeholder"; text: string }
-  | { kind: "steps"; label: string; steps: string[] };
+  | { kind: "steps"; label: string; steps: string[] }
+  | { kind: "infero" }
+  | { kind: "premiere" };
 
 export type Chapter = {
   id: string;
@@ -120,7 +122,7 @@ export const chapters: Chapter[] = [
       },
     ],
     stack: ["Python", "FastAPI", "Redis", "PyTorch", "Transformers", "Docker", "Prometheus", "Locust"],
-    visual: { kind: "placeholder", text: "[GIF of a request streaming, or a benchmark chart]" },
+    visual: { kind: "infero" },
     link: "https://github.com/satvik8954/llm-inference-server",
     linkLabel: "Infero on GitHub ↗",
     layout: "statement",
@@ -150,12 +152,44 @@ export const chapters: Chapter[] = [
       },
     ],
     stack: ["Node.js", "MCP", "UXP", "WebSocket"],
-    visual: { kind: "placeholder", text: "[GIF: an agent editing a timeline in Premiere]" },
+    visual: { kind: "premiere" }, // swap for the real screen recording when it exists
     link: "https://github.com/satvik8954/pr_mcp",
     linkLabel: "Premiere Bridge on GitHub ↗",
     layout: "bleed",
   },
 ];
+
+/** Infero's scroll-driven diagram (stands in for a GIF; shows design, no numbers). */
+export const inferoDiagram = {
+  label: "Diagram of how Infero handles requests",
+  caption: "How a request moves through Infero.",
+  token: "req",
+  zones: {
+    incoming: "Requests",
+    queue: "Priority queue (Redis)",
+    batch: "Batch: fires at 8 requests or max wait",
+    model: "Model",
+    modelText: "One batched forward pass",
+    dropped: "Dropped: the caller gave up",
+    cache: "Cache hit: answered without the model",
+  },
+};
+
+/** Premiere Bridge illustration. Clearly labelled; replace with a real recording later. */
+export const premiereIllustration = {
+  label: "Illustration of an agent editing a Premiere Pro timeline",
+  caption: "Illustration of an edit, not a recording. Real footage coming soon.",
+  commands: [
+    "Split the interview at 00:09",
+    "Remove the pause after it and close the gap",
+    "Place broll_city.mp4 on V2 at 00:06",
+    "Add a cross dissolve at the cut",
+    "Export the sequence at 1080×1920",
+  ],
+  ruler: ["00:00", "00:05", "00:10", "00:15", "00:20"],
+  clips: { interview: "interview.mp4", broll: "broll_city.mp4", pause: "pause", fx: "Cross dissolve" },
+  exportLabel: "Export · 1080×1920",
+};
 
 export const experiments = {
   title: "Experiments",

@@ -1,7 +1,11 @@
 import type { Chapter as ChapterData, Visual as VisualData } from "@/data/content";
 import { SmartLink, T } from "./Text";
+import { InferoDiagram } from "./InferoDiagram";
+import { PremiereIllustration } from "./PremiereIllustration";
 
 function Visual({ v, wide }: { v: VisualData; wide?: boolean }) {
+  if (v.kind === "infero") return <InferoDiagram wide={wide} />;
+  if (v.kind === "premiere") return <PremiereIllustration wide={wide} />;
   const cls = `visual${wide ? " visual--wide" : ""}`;
   if (v.kind === "steps") {
     // A plain typographic diagram: no data, nothing confidential.
