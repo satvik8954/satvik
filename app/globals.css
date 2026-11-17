@@ -187,6 +187,14 @@ a:hover { color: var(--accent); }
 }
 .visual figcaption { margin-top: 8px; }
 
+/* typographic process diagram (ExciPick): three plain steps, read top to bottom */
+.steps { display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: 0; text-align: left; padding: clamp(24px, 3vw, 40px); }
+.steps__step { display: flex; flex-direction: column; gap: 6px; padding: 18px 0; border-top: 1px solid var(--paper-edge); }
+.steps__step:first-child { border-top: 0; }
+.steps__step:not(:last-child)::after { content: "↓"; color: var(--ink-soft); font-size: 1.25rem; line-height: 1; margin-top: 12px; }
+.steps__text { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.25rem, 2vw, 1.75rem); letter-spacing: -0.025em; line-height: 1.1; text-wrap: balance; }
+.steps__step:last-child .steps__text { color: var(--accent); }
+
 /* 01 · split: text left, visual right, visual dropped lower */
 .chapter--split .chapter__body { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); column-gap: 24px; }
 .chapter--split .chapter__text { grid-column: 1 / span 5; }
@@ -203,8 +211,11 @@ a:hover { color: var(--accent); }
 .chapter__cols { margin-top: 48px; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); column-gap: 24px; }
 .chapter__cols .rows { grid-column: 1 / span 6; }
 .chapter__cols .stack, .chapter__cols .also, .chapter__cols .chapter__link { grid-column: 7 / -1; }
+.chapter__cols { grid-template-rows: auto auto 1fr; align-items: start; }
+.chapter__cols .rows { grid-row: 1 / span 3; }
 .chapter__cols .stack { grid-row: 1; margin-top: 0; align-content: start; }
-.chapter__cols .chapter__link { grid-row: 1; margin-top: 64px; }
+.chapter__cols .also { grid-row: 2; }
+.chapter__cols .chapter__link { grid-row: 3; margin-top: 24px; }
 
 /* 03 · bleed: the showpiece GIF breaks out to the full viewport */
 .chapter--bleed .visual {
@@ -257,6 +268,7 @@ a:hover { color: var(--accent); }
   font-family: var(--font-display); font-weight: 600; font-size: var(--t-h2); letter-spacing: -0.02em;
 }
 .contact__email a { text-decoration: none; }
+.contact__email { min-width: 0; overflow-wrap: anywhere; }
 .contact__links { grid-column: 4 / -1; display: flex; flex-wrap: wrap; gap: 12px 32px; }
 .footer { grid-column: 1 / -1; margin-top: clamp(64px, 12vh, 160px); padding-top: 16px; border-top: 1px solid var(--paper-edge); }
 
@@ -302,6 +314,7 @@ a:hover { color: var(--accent); }
   .chapter--bleed .chapter__head, .chapter--bleed .oneliner, .chapter--bleed .chapter__cols { margin-left: 0; }
   .rows__row { grid-template-columns: 1fr; gap: 4px; }
   .visual__frame, .visual--wide .visual__frame, .chapter--bleed .visual__frame { aspect-ratio: 4 / 3; }
+  .contact__email { font-size: clamp(1.125rem, 5.5vw, 1.75rem); }
   /* the pile becomes a horizontal row of notes */
   .pile { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 16px; }
   .note { flex: 0 0 78%; scroll-snap-align: start; }

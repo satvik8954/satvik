@@ -1,12 +1,28 @@
-import type { Chapter as ChapterData } from "@/data/content";
+import type { Chapter as ChapterData, Visual as VisualData } from "@/data/content";
 import { SmartLink, T } from "./Text";
 
-function Visual({ text, wide }: { text: string; wide?: boolean }) {
-  // Visuals are placeholders until real GIFs/screenshots arrive in /public.
+function Visual({ v, wide }: { v: VisualData; wide?: boolean }) {
+  const cls = `visual${wide ? " visual--wide" : ""}`;
+  if (v.kind === "steps") {
+    // A plain typographic diagram: no data, nothing confidential.
+    return (
+      <figure className={cls}>
+        <ol className="visual__frame steps" aria-label={v.label}>
+          {v.steps.map((s, i) => (
+            <li key={s} className="steps__step">
+              <span className="label">{String(i + 1).padStart(2, "0")}</span>
+              <span className="steps__text">{s}</span>
+            </li>
+          ))}
+        </ol>
+      </figure>
+    );
+  }
+  // Placeholder until a real GIF/screenshot arrives in /public.
   return (
-    <figure className={`visual${wide ? " visual--wide" : ""}`}>
-      <div className="visual__frame" role="img" aria-label={`Placeholder: ${text}`}>
-        <T>{text}</T>
+    <figure className={cls}>
+      <div className="visual__frame" role="img" aria-label={`Placeholder: ${v.text}`}>
+        <T>{v.text}</T>
       </div>
     </figure>
   );
@@ -35,7 +51,7 @@ function Details({ c }: { c: ChapterData }) {
       {c.also && <p className="also">{c.also}</p>}
       {c.link && (
         <p className="chapter__link">
-          <SmartLink href={c.link}>View {c.title} ↗</SmartLink>
+          <SmartLink href={c.link} className="link">{c.linkLabel ?? `View ${c.title} ↗`}</SmartLink>
         </p>
       )}
     </>
@@ -68,7 +84,7 @@ export function Chapter({ c, total }: { c: ChapterData; total: number }) {
             <p className="oneliner">{c.oneLiner}</p>
             <Details c={c} />
           </div>
-          <Visual text={c.visual} />
+          <Visual v={c.visual} />
         </div>
       )}
 
@@ -76,7 +92,7 @@ export function Chapter({ c, total }: { c: ChapterData; total: number }) {
         <div className="chapter__body">
           {head}
           <p className="oneliner oneliner--big">{c.oneLiner}</p>
-          <Visual text={c.visual} wide />
+          <Visual v={c.visual} wide />
           <div className="chapter__cols">
             <Details c={c} />
           </div>
@@ -87,7 +103,7 @@ export function Chapter({ c, total }: { c: ChapterData; total: number }) {
         <div className="chapter__body">
           {head}
           <p className="oneliner">{c.oneLiner}</p>
-          <Visual text={c.visual} wide />
+          <Visual v={c.visual} wide />
           <div className="chapter__cols">
             <Details c={c} />
           </div>
